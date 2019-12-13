@@ -24,7 +24,7 @@ class mug:
         self.decoration=decoration
         self.state=state
         self.clean=clean
-        self.content='nothing'      # Mugs have no contentat the start
+        self.content='nothing'      # Mugs have no content at the start
         
     def fill(self,quantity,content='Tea'):
         # quantity is the amount to put in the mug. It cannot exceed the size!
@@ -41,10 +41,18 @@ class mug:
             
         self.clean = False
         
-    def __add__(self,quantity):   #Operator overload for '+'
-        return('Sorry you cannot topup that way!')
+    def __add__(self, othermug):   #Operator overload for '+'
+        if self.content != othermug.content:
+            pass
+        else:
+            if self.size < self.state+othermug.state:
+                self.state =  self.state+othermug.state
+            else:
+                self.state =  self.size
+                
         
     def empty(self):
+
         # Pour away the contents - state=0
         ''' empty the content of the mug
         '''
@@ -88,6 +96,7 @@ if __name__ == '__main__':
     print('Class mug test')
     #'Create an object of class mug - mymug, holds a maximun of 450ml and has a picture of a blue bird'
     mymug=mug(450,'Blue Bird')
+    petersmug = mug(350,"We're with Greta!",50)
     # Fill the mymug with 400ml of coffee
     mymug.fill(400,'Coffee')
     # Check mymug
@@ -99,6 +108,9 @@ if __name__ == '__main__':
     mymug.sip(100)
     print(mymug.whatsleft())
     mymug.sip(50)
-    # Have another sip
+    petersmug.fill(100,'Coffee')
+    mymug.__add__(petersmug)
+
+    print(petersmug.whatsleft())
     print(mymug.whatsleft())
     
