@@ -1,32 +1,33 @@
 #!/usr/bin/python3
 
-# Script name: mug_class_3.py
+# Script name: Mug.py
 
 # Mark Bradley
 # 12/12/19
+# Peter Normington
+# 16/12/2019
 
-# demo of a class object built to show the use of a commom tea mug
-# converted to a module
+# demo of a class representing a commom tea mug
 
-class mug:
+class Mug:
     ''' Class to describe the common Mug.
-        Size is capacity in ml.
-        Decoration,colour picture etc.
-        State how many ml are in the mug at the moment.
-        Clean, True if the mug has not been used
-        Content, whats in the mug'''
+        size: capacity in ml.
+        decoration: colour picture etc.
+        state: how many ml are in the mug at the moment.
+        clean: True if the mug is in a pristine state
+        content: what sort of stuff is in the mug'''
     
-    def __init__(self,size=350,decoration='',state=0,clean=True):
+    def __init__(self,size=350,decoration='plain white'):
         # Initalize an instance of mug
-        '''This builds the 'mug' using the default parameter unless new ones are supplied.
+        '''This builds the 'mug' using the default parameters unless new ones are supplied.
         '''
         self.size=size
         self.decoration=decoration
-        self.state=state
-        self.clean=clean
+        self.state=0
+        self.clean=True
         self.content='nothing'      # Mugs have no content at the start
         
-    def fill(self,quantity,content='Tea'):
+    def fill(self,quantity,content='tea'):
         # quantity is the amount to put in the mug. It cannot exceed the size!
         ''' fill adds a quantity in ml of the beverage specified in content to your mug
         '''
@@ -34,27 +35,17 @@ class mug:
         
         if quantity > (self.size - self.state):
             self.state = self.size
-            return('Oh dear some of that over flowed!')
+            return('Oh dear! Some of that '+ self.content + ' overflowed!')
             
         else:
             self.state = quantity
             
-        self.clean = False
-        
-    def __add__(self, othermug):   #Operator overload for '+'
-        if self.content != othermug.content:
-            pass
-        else:
-            if self.size < self.state+othermug.state:
-                self.state =  self.state+othermug.state
-            else:
-                self.state =  self.size
-                
+        self.clean = False                
         
     def empty(self):
 
-        # Pour away the contents - state=0
-        ''' empty the content of the mug
+        # Pour away the contents
+        ''' empty the mug
         '''
         self.state=0
         
@@ -67,7 +58,7 @@ class mug:
             return('Your mug is already empty!')
         elif sip_size >= self.state:
             self.state = 0
-            return('Oh dear all your '+self.content+' has gone!')
+            return('Oh dear.  All your ' + self.content + ' has gone!')
             
         else:
             self.state = self.state - sip_size
@@ -80,9 +71,9 @@ class mug:
         
     def whatsleft(self):
         # Print the current state of the mug
-        ''' This function tells you about the contents of your mug.
+        ''' Tells you about the contents of your mug.
         '''
-        if self.state==0:        #state_s holds a string describing the state of the mug
+        if self.state==0:
             state_s = 'is empty.'
         elif self.state==self.size:
             state_s = 'is full of ' + self.content + '.'
@@ -108,9 +99,8 @@ if __name__ == '__main__':
     mymug.sip(100)
     print(mymug.whatsleft())
     mymug.sip(50)
-    petersmug.fill(100,'Coffee')
-    mymug.__add__(petersmug)
 
+    petersmug.fill(100,'Coffee')
     print(petersmug.whatsleft())
     print(mymug.whatsleft())
     
