@@ -21,47 +21,47 @@ class Mug:
         # Initalize an instance of mug
         '''This builds a clean, empty mug with a default size and decoration unless new values are supplied.
         '''
-        self.size=size
-        self.decoration="\'" + decoration + "\'"
+        self.__size=size
+        self.__decoration="\'" + decoration + "\'"
         # Mugs have no content at the start
-        self.state=0
-        self.clean=True
-        self.content='nothing'
+        self.__state=0
+        self.__clean=True
+        self.__content='nothing'
         
     def fill(self,quantity,content='tea'):
         # quantity is the amount in ml put in the mug.
         ''' fill adds to your mug a quantity in ml of the beverage specified
         '''
-        self.content=content
+        self.__content=content
         
-        if quantity > (self.size - self.state):
-            self.state = self.size
-            print('Oh dear! Some of that '+ self.content + ' overflowed!')
+        if quantity > (self.__size - self.__state):
+            self.__state = self.__size
+            print('Oh dear! Some of that '+ self.__content + ' overflowed!')
             
         else:
-            self.state = quantity
+            self.__state = quantity
             
-        self.clean = False                
+        self.__clean = False                
         
     def empty(self):
 
         # Pour away the contents
         ''' empty the mug
         '''
-        self.state=0
+        self.__state=0
         
     def sip(self,sip_size=30):
         # Take a sip of the drink, default is 30ml
         ''' Take a sip of your beverage; a standard sip is 30ml
             If you have drunk it all you will get an appropriate warning.
         '''
-        if self.state==0:
+        if self.__state==0:
             report_string ='Your mug is already empty!'
-        elif sip_size >= self.state:
-            self.state = 0
-            report_string ='Oh dear.  All your ' + self.content + ' has gone, so you were short-changed!'
+        elif sip_size >= self.__state:
+            self.__state = 0
+            report_string ='Oh dear.  All your ' + self.__content + ' has gone, so you were short-changed!'
         else:
-            self.state = self.state - sip_size
+            self.__state = self.__state - sip_size
             report_string = 'Mmm, tasty sip, that!'
         print(report_string)
     
@@ -69,26 +69,27 @@ class Mug:
         ''' wash uses the built-in "empty" function and sets "clean" back to True.
         '''
         self.empty()
-        self.clean=True
+        self.__clean=True
         
     def whatsleft(self):
         # Returns a string commenting on the current state of the mug
         ''' Tells you about the contents of your mug.
         '''
-        if self.state==0:
+        if self.__state==0:
             state_s = 'is empty.'
-        elif self.state==self.size:
-            state_s = 'is full of ' + self.content + '.'
+        elif self.__state==self.__size:
+            state_s = 'is full of ' + self.__content + '.'
         else:
-            state_s = 'has ' + str(self.state) + 'ml of ' + self.content + ' left.'
+            state_s = 'has ' + str(self.__state) + 'ml of ' + self.__content + ' left.'
         
-        return('The ' + self.decoration + ' mug ' + state_s)
+        return('The ' + self.__decoration + ' mug ' + state_s)
     
 if __name__ == '__main__':
     
     print('Class mug test')
     #'Create an object of class mug - mymug, holds a maximun of 450ml and has a picture of a blue bird'
     mymug=Mug(450,'Blue Bird')
+    #'Create an object of class mug - petersmug, holds a maximun of 350ml and has a slogan printed on it'
     petersmug = Mug(350,"We're with Greta!")
     # Fill the mymug with 400ml of coffee
     mymug.fill(400,'coffee')
